@@ -15,7 +15,7 @@
     <meta name="author" content="" />
     <link rel="shortcut icon" href="images/GoSmartCitygreen.png" type="" />
 
-    <title>GoSamrtCity</title>
+    <title>GoSmartCity - Register</title>
 
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
@@ -55,7 +55,7 @@
         <div class="container-fluid">
           <nav class="navbar navbar-expand-lg custom_nav-container">
             <a class="navbar-brand" href="index.html">
-              <img src="images/GoSmartCitygreen.png" alt="GoSmartCity Logo" class="brand-logo"> 
+              <img src="images/GoSmartCitygreen.png" alt="GoSmartCity Logo" class="brand-logo">
               <span> GoSmartCity </span>
             </a>
 
@@ -85,15 +85,13 @@
                 <li class="nav-item">
                   <a class="nav-link" href="why.html">Why Us</a>
                 </li>
-                <li class="nav-item active">
-                  <a class="nav-link" href="team.html"
-                    >Team <span class="sr-only">(current)</span>
-                  </a>
-                </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    <i class="fa fa-user" aria-hidden="true"></i> Login</a
-                  >
+                  <a class="nav-link" href="team.html">Team</a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="login.html">
+                    <i class="fa fa-user" aria-hidden="true"></i> Login
+                  </a>
                 </li>
                 <form class="form-inline">
                   <button class="btn my-2 my-sm-0 nav_search-btn" type="submit">
@@ -108,107 +106,63 @@
       <!-- end header section -->
     </div>
 
-    <!-- team section -->
-    <section class="team_section layout_padding">
-      <div class="container-fluid">
+    <!-- register section -->
+    <section class="register_section layout_padding">
+      <div class="container">
         <div class="heading_container heading_center">
-          <h2 class="">Our <span> Team</span></h2>
+          <h2>Create an <span>Account</span></h2>
         </div>
-
-        <div class="team_container">
-          <div class="row">
-            <div class="col-lg-3 col-sm-6">
-              <div class="box">
-                <div class="img-box">
-                  <img src="images/rocky.jpg" class="img1" alt="" />
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="register_container">
+              <form action="#">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="firstName">First Name</label>
+                      <input type="text" class="form-control" id="firstName" placeholder="Enter your first name">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="lastName">Last Name</label>
+                      <input type="text" class="form-control" id="lastName" placeholder="Enter your last name">
+                    </div>
+                  </div>
                 </div>
-                <div class="detail-box">
-                  <h5>Tanbirur Rahman</h5>
-                  <p>Lorem, ipsum dolor.</p>
+                <div class="form-group">
+                  <label for="email">Email address</label>
+                  <input type="email" class="form-control" id="email" placeholder="Enter your email">
                 </div>
-                <div class="social_box">
-                  <a href="#">
-                    <i class="fa fa-facebook" aria-hidden="true"></i>
-                  </a>
-                  <a href="#">
-                    <i class="fa fa-twitter" aria-hidden="true"></i>
-                  </a>
-                  <a href="#">
-                    <i class="fa fa-linkedin" aria-hidden="true"></i>
-                  </a>
-                  <a href="#">
-                    <i class="fa fa-instagram" aria-hidden="true"></i>
-                  </a>
-                  <a href="#">
-                    <i class="fa fa-youtube-play" aria-hidden="true"></i>
-                  </a>
+                <div class="form-group">
+                  <label for="phone">Phone Number</label>
+                  <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number">
                 </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-              <div class="box">
-                <div class="img-box">
-                  <img src="images/salman.jpg" class="img1" alt="" />
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="password" class="form-control" id="password" placeholder="Create a password">
                 </div>
-                <div class="detail-box">
-                  <h5>Salman Jubayeed</h5>
-                  <p>Lorem, ipsum dolor.</p>
+                <div class="form-group">
+                  <label for="confirmPassword">Confirm Password</label>
+                  <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password">
                 </div>
-                <div class="social_box">
-                  <a href="#">
-                    <i class="fa fa-facebook" aria-hidden="true"></i>
-                  </a>
-                  <a href="#">
-                    <i class="fa fa-twitter" aria-hidden="true"></i>
-                  </a>
-                  <a href="#">
-                    <i class="fa fa-linkedin" aria-hidden="true"></i>
-                  </a>
-                  <a href="#">
-                    <i class="fa fa-instagram" aria-hidden="true"></i>
-                  </a>
-                  <a href="#">
-                    <i class="fa fa-youtube-play" aria-hidden="true"></i>
-                  </a>
+                <div class="form-group form-check">
+                  <input type="checkbox" class="form-check-input" id="terms">
+                  <label class="form-check-label" for="terms">I agree to the Terms and Conditions</label>
                 </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-              <div class="box">
-                <div class="img-box">
-                  <img src="images/head.png" class="img1" alt="" />
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+                <div class="mt-4 text-center">
+                  <p>Already have an account? <a href="login.html" class="login-link">Login here</a></p>
                 </div>
-                <div class="detail-box">
-                  <h5>Faraz Fardin</h5>
-                  <p>Lorem, ipsum dolor.</p>
-                </div>
-                <div class="social_box">
-                  <a href="#">
-                    <i class="fa fa-facebook" aria-hidden="true"></i>
-                  </a>
-                  <a href="#">
-                    <i class="fa fa-twitter" aria-hidden="true"></i>
-                  </a>
-                  <a href="#">
-                    <i class="fa fa-linkedin" aria-hidden="true"></i>
-                  </a>
-                  <a href="#">
-                    <i class="fa fa-instagram" aria-hidden="true"></i>
-                  </a>
-                  <a href="#">
-                    <i class="fa fa-youtube-play" aria-hidden="true"></i>
-                  </a>
-                </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <!-- end team section -->
+    <!-- end register section -->
 
     <!-- info section -->
-
     <section class="info_section layout_padding2">
       <div class="container">
         <div class="row">
@@ -260,7 +214,7 @@
             <div class="info_link_box">
               <h4>Links</h4>
               <div class="info_links">
-                <a class="active" href="index.html"> Home </a>
+                <a class="" href="index.html"> Home </a>
                 <a class="" href="about.html"> About </a>
                 <a class="" href="service.html"> Services </a>
                 <a class="" href="why.html"> Why Us </a>
@@ -278,7 +232,6 @@
         </div>
       </div>
     </section>
-
     <!-- end info section -->
 
     <!-- footer section -->
@@ -292,25 +245,11 @@
     </section>
     <!-- footer section -->
 
-    <!-- jQery -->
+    <!-- Scripts -->
     <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-    <!-- popper js -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-      crossorigin="anonymous"
-    ></script>
-    <!-- bootstrap js -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
-    <!-- owl slider -->
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
-    ></script>
-    <!-- custom js -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script type="text/javascript" src="js/custom.js"></script>
-    <!-- Google Map -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
-    <!-- End Google Map -->
   </body>
 </html>
