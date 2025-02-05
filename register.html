@@ -26,13 +26,6 @@
       rel="stylesheet"
     />
 
-    <!--owl slider stylesheet -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
-    />
-
     <!-- font awesome style -->
     <link href="css/font-awesome.min.css" rel="stylesheet" />
 
@@ -106,61 +99,103 @@
       <!-- end header section -->
     </div>
 
-    <!-- register section -->
-    <section class="register_section layout_padding">
-      <div class="container">
-        <div class="heading_container heading_center">
-          <h2>Create an <span>Account</span></h2>
-        </div>
-        <div class="row justify-content-center">
-          <div class="col-md-8">
-            <div class="register_container">
-              <form action="#">
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="firstName">First Name</label>
-                      <input type="text" class="form-control" id="firstName" placeholder="Enter your first name">
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="lastName">Last Name</label>
-                      <input type="text" class="form-control" id="lastName" placeholder="Enter your last name">
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="email">Email address</label>
-                  <input type="email" class="form-control" id="email" placeholder="Enter your email">
-                </div>
-                <div class="form-group">
-                  <label for="phone">Phone Number</label>
-                  <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number">
-                </div>
-                <div class="form-group">
-                  <label for="password">Password</label>
-                  <input type="password" class="form-control" id="password" placeholder="Create a password">
-                </div>
-                <div class="form-group">
-                  <label for="confirmPassword">Confirm Password</label>
-                  <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password">
-                </div>
-                <div class="form-group form-check">
-                  <input type="checkbox" class="form-check-input" id="terms">
-                  <label class="form-check-label" for="terms">I agree to the Terms and Conditions</label>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Register</button>
-                <div class="mt-4 text-center">
-                  <p>Already have an account? <a href="login.html" class="login-link">Login here</a></p>
-                </div>
-              </form>
+<!-- register section -->
+<section class="register_section layout_padding">
+  <div class="container">
+    <div class="heading_container heading_center">
+      <h2>Create an <span>Account</span></h2>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="register_container">
+          <form action="#">
+            <div class="form-group">
+              <label for="userType" class="font-weight-bold">User Type</label>
+              <select class="form-control" id="userType">
+                <option value="" selected disabled>Select user type</option>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+              </select>
             </div>
-          </div>
+             
+            <div id="adminVerification" style="display: none;">
+              <div class="alert alert-info">
+                <strong>Admin Registration Requirements:</strong>
+                <ul>
+                  <li>Must be a current employee of GoSmartCity</li>
+                  <li>Must have a valid employee ID</li>
+                  <li>Must provide department information</li>
+                </ul>
+              </div>
+              
+              <div class="form-group">
+                <label for="employeeId" class="font-weight-bold">Employee ID</label>
+                <input type="text" class="form-control" id="employeeId" placeholder="Enter your employee ID">
+              </div>
+              
+              <div class="form-group">
+                <label for="department" class="font-weight-bold">Department</label>
+                <select class="form-control" id="department">
+                  <option value="" selected disabled>Select your department</option>
+                  <option value="it">IT Department</option>
+                  <option value="operations">Operations</option>
+                  <option value="management">Management</option>
+                  <option value="security">Security</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="adminCode" class="font-weight-bold">Administrative Access Code</label>
+                <input type="text" class="form-control" id="adminCode" placeholder="Enter the admin access code">
+                <small class="form-text text-muted">This code should be provided by your supervisor</small>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="firstName" class="font-weight-bold">First Name</label>
+                  <input type="text" class="form-control" id="firstName" placeholder="Enter your first name">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="lastName" class="font-weight-bold">Last Name</label>
+                  <input type="text" class="form-control" id="lastName" placeholder="Enter your last name">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email" class="font-weight-bold">Email address</label>
+              <input type="email" class="form-control" id="email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+              <label for="phone" class="font-weight-bold">Phone Number</label>
+              <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number">
+            </div>
+            <div class="form-group">
+              <label for="password" class="font-weight-bold">Password</label>
+              <input type="password" class="form-control" id="password" placeholder="Create a password">
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword" class="font-weight-bold">Confirm Password</label>
+              <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password">
+            </div>
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="terms">
+              <label class="form-check-label" for="terms">I agree to the Terms and Conditions</label>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Register</button>
+            <div class="mt-4 text-center">
+              <p>Already have an account? <a href="login.html" class="login-link">Login here</a></p>
+            </div>
+          </form>
         </div>
       </div>
-    </section>
-    <!-- end register section -->
+    </div>
+  </div>
+</section>
+<!-- end register section -->
 
     <!-- info section -->
     <section class="info_section layout_padding2">
@@ -246,10 +281,18 @@
     <!-- footer section -->
 
     <!-- Scripts -->
+    <!-- jQery -->
     <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <!-- popper js -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <!-- bootstrap js -->
     <script type="text/javascript" src="js/bootstrap.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <script type="text/javascript" src="js/custom.js"></script>
+    <!-- custom js -->
+    <!-- custom js -->
+    <script type="text/javascript" src="js/register-custom.js"></script>
   </body>
 </html>
