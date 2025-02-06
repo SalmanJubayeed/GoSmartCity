@@ -1,4 +1,3 @@
-// Budget Tracker
 document.addEventListener('DOMContentLoaded', function() {
     const incomeForm = document.querySelector('.income_form');
     const expenseForm = document.querySelector('.expense_form');
@@ -23,9 +22,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const additionalIncome = parseFloat(additionalIncomeInput.value) || 0;
         const totalIncome = primaryIncome + additionalIncome;
         
-        totalIncomeInput.value = totalIncome.toFixed(2);
+        totalIncomeDisplay.value = totalIncome.toFixed(2); // Fixed: use totalIncomeDisplay instead of undefined totalIncomeInput
         return totalIncome;
     }
+
 
     function calculateTotalExpenses() {
         let totalExpenses = 0;
@@ -37,16 +37,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function provideFinancialAdvice(income, expenses) {
         const savingsRate = ((income - expenses) / income) * 100;
-        
+        const budgetBalanceElement = document.querySelector('.budget_balance .amount');
+        const balanceAdviceElement = document.querySelector('.balance_advice p');
+    
+        // Remove previous color classes
+        balanceAdviceElement.classList.remove(
+            'text-success', 'text-warning', 'text-danger'
+        );
+    
         if (savingsRate > 30) {
+            balanceAdviceElement.classList.add('text-success');
             return "Excellent! You're saving more than 30% of your income. Consider investing the surplus.";
         } else if (savingsRate > 20) {
+            balanceAdviceElement.classList.add('text-success');
             return "Good job! You're maintaining a healthy savings rate. Consider further optimizing expenses.";
         } else if (savingsRate > 10) {
+            balanceAdviceElement.classList.add('text-warning');
             return "You're saving, but could improve. Look for areas to reduce expenses or increase income.";
         } else if (savingsRate > 0) {
+            balanceAdviceElement.classList.add('text-warning');
             return "Minimal savings. Review your expenses carefully and look for significant cost-cutting opportunities.";
         } else {
+            balanceAdviceElement.classList.add('text-danger');
             return "Warning: Your expenses exceed your income. Urgent budget restructuring needed.";
         }
     }

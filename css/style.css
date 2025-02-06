@@ -1372,8 +1372,29 @@ a:focus {
 }
 
 .balance_advice p {
-  color: #6c757d;
+  color: #000000;
   margin-bottom: 0;
+  font-size: 1.25rem; 
+  font-weight: bold; 
+  text-shadow: 
+}
+
+.balance_advice p.text-success {
+  text-shadow: 
+      0 0 5px rgba(25, 135, 84, 0.5), /* Green glow */
+      0 0 10px green;
+}
+
+.balance_advice p.text-warning {
+  text-shadow: 
+      0 0 5px rgba(255, 193, 7, 0.5), /* Yellow glow */
+      0 0 10px orange;
+}
+
+.balance_advice p.text-danger {
+  text-shadow: 
+      0 0 5px rgba(220, 53, 69, 0.5), /* Red glow */
+      0 0 10px red;
 }
 
 @media (max-width: 768px) {
