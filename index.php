@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+$authenticated = false;
+if(isset($_SESSION["email"])) {
+  $authenticated = true;
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -15,7 +25,7 @@
     <meta name="author" content="" />
     <link rel="shortcut icon" href="images/GoSmartCitygreen.png" type="" />
 
-    <title>GoSamrtCity</title>
+    <title>GoSmartCity</title>
 
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
@@ -100,16 +110,42 @@
                 <li class="nav-item">
                   <a class="nav-link" href="team.html">Team</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="login.html">
-                    <i class="fa fa-user" aria-hidden="true"></i> Login</a
-                  >
+
+                <?php
+                if($authenticated) {
+                  ?>
+
+                <li class="nav-item active dropdown">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href=""
+                    id="usersDropdown"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    >User/Admin <span class="sr-only">(current)</span>
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="servicesDropdown">
+                    <a class="dropdown-item" href="profile.php">Profile</a>
+                    <a class="dropdown-item" href="logout.php">Logout</a>
+                  </div>
                 </li>
-                <form class="form-inline">
-                  <button class="btn my-2 my-sm-0 nav_search-btn" type="submit">
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                  </button>
-                </form>
+                <?php
+                } else {
+                ?>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="register.php">
+                    <i class="fa fa-user" aria-hidden="true"></i> Register</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="login.php">
+                    <i class="fa fa-user" aria-hidden="true"></i> Login</a>
+                </li>
+                <?php }
+                ?>
+
               </ul>
             </div>
           </nav>
