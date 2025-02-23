@@ -106,13 +106,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
       rel="stylesheet"
     />
 
-    <!--owl slider stylesheet -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
-    />
-
     <!-- font awesome style -->
     <link href="css/font-awesome.min.css" rel="stylesheet" />
 
