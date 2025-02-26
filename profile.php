@@ -43,6 +43,7 @@ if(!isset($_SESSION["email"])) {
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/info.css">
 </head>
 <body>
 <body class="sub_page">

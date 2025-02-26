@@ -2,7 +2,7 @@
 body {
   font-family: "Open Sans", sans-serif;
   color: #0c0c0c;
-  background-color: #ffffff;
+  background-color: #a0aaeb;
   overflow-x: hidden;
 }
 
@@ -491,6 +491,7 @@ a:focus {
 /* service section */
 .service_section {
   position: relative;
+  background-color: #FFF8E1;
 }
 
 .service_section .box {
@@ -1756,7 +1757,7 @@ a:focus {
 }
 /* end register section */
 
-/
+
 
 /* info section */
 .info_section {
@@ -1914,4 +1915,3 @@ a:focus {
   color: inherit;
 }
 /* end footer section */
-/*# sourceMappingURL=style.css.map */

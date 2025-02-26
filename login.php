@@ -111,6 +111,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/info.css">
     <!-- responsive style -->
     <link href="css/responsive.css" rel="stylesheet" />
   </head>
@@ -166,8 +167,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                   <a class="nav-link" href="team.html">Team</a>
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link" href="#">
-                    <i class="fa fa-user" aria-hidden="true"></i> Login
+                  <a class="nav-link" href="register.php">
+                    <i class="fa fa-user" aria-hidden="true"></i> Register
                     <span class="sr-only">(current)</span>
                   </a>
                 </li>
@@ -264,11 +265,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
               <div class="contact_link_box">
                 <a href="">
                   <i class="fa fa-map-marker" aria-hidden="true"></i>
-                  <span> Location </span>
+                  <span> West Kadhurkhil, Boalkhali, Chattogram </span>
                 </a>
                 <a href="">
                   <i class="fa fa-phone" aria-hidden="true"></i>
-                  <span> Call +01 1234567890 </span>
+                  <span> Call +880 1540 336996 </span>
                 </a>
                 <a href="">
                   <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -306,20 +307,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="info_link_box">
               <h4>Links</h4>
               <div class="info_links">
-                <a class="" href="index.html"> Home </a>
+                <a class="" href="index.php"> Home </a>
                 <a class="" href="about.html"> About </a>
                 <a class="" href="service.html"> Services </a>
                 <a class="" href="why.html"> Why Us </a>
                 <a class="" href="team.html"> Team </a>
               </div>
             </div>
-          </div>
-          <div class="col-md-6 col-lg-3 info_col">
-            <h4>Subscribe</h4>
-            <form action="#">
-              <input type="text" placeholder="Enter email" />
-              <button type="submit">Subscribe</button>
-            </form>
           </div>
         </div>
       </div>

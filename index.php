@@ -52,10 +52,11 @@ if(isset($_SESSION["email"])) {
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
     />
 
-    <!-- Custom styles for this template -->
-    <link href="css/style.css" rel="stylesheet" />
     <!-- responsive style -->
     <link href="css/responsive.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/info.css">
   </head>
 
   <body>
@@ -352,7 +353,7 @@ if(isset($_SESSION["email"])) {
             </div>
           </div>
           <div class="btn-box">
-            <a href=""> View All </a>
+            <a href="service.html"> View All </a>
           </div>
         </div>
       </div>
@@ -389,7 +390,7 @@ if(isset($_SESSION["email"])) {
                 commuters, residents, and visitors alike.
               </p>
               <p>more of us......</p>
-              <a href=""> Read More </a>
+              <a href="about.html"> Read More </a>
             </div>
           </div>
         </div>
@@ -460,7 +461,7 @@ if(isset($_SESSION["email"])) {
           </div>
         </div>
         <div class="btn-box">
-          <a href=""> Read More </a>
+          <a href="why.html"> Read More </a>
         </div>
       </div>
     </section>
@@ -566,6 +567,8 @@ if(isset($_SESSION["email"])) {
     </section>
     <!-- end team section -->
 
+    <!-- info section -->
+
     <section class="info_section layout_padding2">
       <div class="container">
         <div class="row">
@@ -575,11 +578,11 @@ if(isset($_SESSION["email"])) {
               <div class="contact_link_box">
                 <a href="">
                   <i class="fa fa-map-marker" aria-hidden="true"></i>
-                  <span> Location </span>
+                  <span> West Kadhurkhil, Boalkhali, Chattogram </span>
                 </a>
                 <a href="">
                   <i class="fa fa-phone" aria-hidden="true"></i>
-                  <span> Call +01 1234567890 </span>
+                  <span> Call +880 1540 336996 </span>
                 </a>
                 <a href="">
                   <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -617,20 +620,13 @@ if(isset($_SESSION["email"])) {
             <div class="info_link_box">
               <h4>Links</h4>
               <div class="info_links">
-                <a class="active" href="index.html"> Home </a>
+                <a class="active" href="index.php"> Home </a>
                 <a class="" href="about.html"> About </a>
                 <a class="" href="service.html"> Services </a>
                 <a class="" href="why.html"> Why Us </a>
                 <a class="" href="team.html"> Team </a>
               </div>
             </div>
-          </div>
-          <div class="col-md-6 col-lg-3 info_col">
-            <h4>Subscribe</h4>
-            <form action="#">
-              <input type="text" placeholder="Enter email" />
-              <button type="submit">Subscribe</button>
-            </form>
           </div>
         </div>
       </div>

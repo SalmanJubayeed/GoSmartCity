@@ -170,6 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/info.css">
     <!-- responsive style -->
     <link href="css/responsive.css" rel="stylesheet" />
   </head>
@@ -186,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       <header class="header_section">
         <div class="container-fluid">
           <nav class="navbar navbar-expand-lg custom_nav-container">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="index.php">
               <img
                 src="images/GoSmartCitygreen.png"
                 alt="GoSmartCity Logo"
@@ -210,7 +211,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav">
                 <li class="nav-item">
-                  <a class="nav-link" href="index.html">Home </a>
+                  <a class="nav-link" href="index.php">Home </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="about.html"> About</a>
@@ -225,15 +226,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                   <a class="nav-link" href="team.html">Team</a>
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link" href="login.html">
-                    <i class="fa fa-user" aria-hidden="true"></i> Register
+                  <a class="nav-link" href="login.php">
+                    <i class="fa fa-user" aria-hidden="true"></i> Login
                   </a>
                 </li>
-                <form class="form-inline">
-                  <button class="btn my-2 my-sm-0 nav_search-btn" type="submit">
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                  </button>
-                </form>
               </ul>
             </div>
           </nav>
@@ -330,7 +326,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <a href="index.php" class="btn btn-primary flex-fill text-center d-flex justify-content-center align-items-center">Cancel</a>
             </div>
             <div class="mt-4 text-center">
-              <p>Already have an account? <a href="login.html" class="login-link">Login here</a></p>
+              <p>Already have an account? <a href="login.php" class="login-link">Login here</a></p>
             </div>
           </form>
         </div>
@@ -349,11 +345,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
               <div class="contact_link_box">
                 <a href="">
                   <i class="fa fa-map-marker" aria-hidden="true"></i>
-                  <span> Location </span>
+                  <span> West Kadhurkhil, Boalkhali, Chattogram </span>
                 </a>
                 <a href="">
                   <i class="fa fa-phone" aria-hidden="true"></i>
-                  <span> Call +01 1234567890 </span>
+                  <span> Call +880 01540 336996 </span>
                 </a>
                 <a href="">
                   <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -391,20 +387,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             <div class="info_link_box">
               <h4>Links</h4>
               <div class="info_links">
-                <a class="" href="index.html"> Home </a>
+                <a class="" href="index.php"> Home </a>
                 <a class="" href="about.html"> About </a>
                 <a class="" href="service.html"> Services </a>
                 <a class="" href="why.html"> Why Us </a>
                 <a class="" href="team.html"> Team </a>
               </div>
             </div>
-          </div>
-          <div class="col-md-6 col-lg-3 info_col">
-            <h4>Subscribe</h4>
-            <form action="#">
-              <input type="text" placeholder="Enter email" />
-              <button type="submit">Subscribe</button>
-            </form>
           </div>
         </div>
       </div>
