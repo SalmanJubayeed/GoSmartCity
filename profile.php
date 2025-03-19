@@ -1,10 +1,56 @@
 <?php
 session_start();
+include 'db.php';
+
+$conn = getDatabaseConnection();
 
 if(!isset($_SESSION["email"])) {
     header("location: login.php");
     exit;
 }
+
+if (!isset($_SESSION["id"])) {
+    die("Error: User ID is not set. Please log in again.");
+}
+
+$user_id = $_SESSION["id"];
+$user_email = $_SESSION["email"];
+
+// Fetch user's rentals
+$query1 = "SELECT * FROM rentals WHERE user_id = ?";
+$stmt1 = $conn->prepare($query1);
+$stmt1->bind_param("i", $user_id);
+$stmt1->execute();
+$rentals = $stmt1->get_result()->fetch_all(MYSQLI_ASSOC);
+
+// Fetch bookings for the user's rentals
+$query2 = "SELECT b.id, b.owner_id, b.user_name, b.user_phone, b.rental_id, b.status, b.created_at,
+          r.location, r.monthly_rent
+          FROM bookings b
+          JOIN rentals r ON b.rental_id = r.id
+          WHERE b.owner_id = ?";  // Fixed from r.user_id to b.owner_id
+
+$stmt2 = $conn->prepare($query2);
+$stmt2->bind_param("i", $user_id);
+$stmt2->execute();
+$bookings = $stmt2->get_result()->fetch_all(MYSQLI_ASSOC);
+
+// Fetch user bookings with rental details
+$query3 = "SELECT 
+            bookings.id AS booking_id, bookings.status, bookings.created_at,
+            rentals.rental_type, rentals.location, rentals.floor, rentals.bedrooms, rentals.bathrooms, 
+            rentals.gas_type, rentals.monthly_rent, rentals.features
+          FROM bookings
+          JOIN rentals ON bookings.rental_id = rentals.id
+          WHERE bookings.user_email = ? 
+          ORDER BY bookings.created_at DESC";
+
+$stmt3 = $conn->prepare($query3);
+$stmt3->bind_param("s", $user_email);
+$stmt3->execute();
+$result = $stmt3->get_result();
+
+
 ?>
 
 <!DOCTYPE html>
@@ -44,6 +90,95 @@ if(!isset($_SESSION["email"])) {
     <link href="css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/profile.css">
     <link rel="stylesheet" href="css/info.css">
+    <style>
+      /* Container styling for profile sections */
+.profile-section {
+  background-color: #002147;
+  color: white;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+/* Table heading styling */
+h3 {
+  color: #00bbf0;
+  margin-bottom: 15px;
+  font-size: 22px;
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #0078B6;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: #001836;
+  border: 1px solid #0078B6;
+}
+
+th {
+  background-color: #001430;
+  color: #00bbf0;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  border: 1px solid #0078B6;
+}
+
+td {
+  padding: 8px 10px;
+  text-align: center;
+  border: 1px solid #0078B6;
+  color: white;
+}
+
+/* Alternating row colors for better readability */
+tr:nth-child(even) {
+  background-color: #002856;
+}
+
+/* Hover effect */
+tr:hover td {
+  background-color: #003366;
+}
+
+/* Empty state message */
+p {
+  color: #8eacc5;
+  text-align: center;
+  font-style: italic;
+  padding: 15px 0;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  table {
+    font-size: 14px;
+  }
+  
+  th, td {
+    padding: 6px 4px;
+  }
+  
+  .profile-section {
+    padding: 15px 10px;
+  }
+}
+
+/* Extra small screens */
+@media screen and (max-width: 480px) {
+  table {
+    font-size: 12px;
+  }
+  
+  h3 {
+    font-size: 18px;
+  }
+}
+    </style>
 </head>
 <body>
 <body class="sub_page">
@@ -169,6 +304,111 @@ if(!isset($_SESSION["email"])) {
                 <div class="value"><?=$_SESSION["created_at"]?></div>
               </div>
             </div>
+
+<!-- Rented House Info -->
+<div class="profile-section">
+    <?php if (!empty($rentals)): ?>
+        <h3>Your Rentals</h3>
+        <table>
+            <tr>
+                <th>Location</th>
+                <th>Rental Type</th>
+                <th>Monthly Rent</th>
+                <th>Floor</th>
+                <th>Bedrooms</th>
+                <th>Bathrooms</th>
+                <th>Gas Type</th>
+            </tr>
+            <?php foreach ($rentals as $rental): ?>
+            <tr>
+                <td><?= htmlspecialchars($rental['location']) ?></td>
+                <td><?= htmlspecialchars($rental['rental_type']) ?></td>
+                <td><?= htmlspecialchars($rental['monthly_rent']) ?></td>
+                <td><?= htmlspecialchars($rental['floor']) ?></td>
+                <td><?= htmlspecialchars($rental['bedrooms']) ?></td>
+                <td><?= htmlspecialchars($rental['bathrooms']) ?></td>
+                <td><?= htmlspecialchars($rental['gas_type']) ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+    <?php else: ?>
+        <p>You have not listed any rentals.</p>
+    <?php endif; ?>
+</div>
+
+<!-- Booked info -->
+<div class="profile-section">
+    <?php if (!empty($bookings)): ?>
+        <h3>Bookings for Your Rentals</h3>
+        <table>
+            <tr>
+                <th>Booker Name</th>
+                <th>Phone</th>
+                <th>Status</th>
+                <th>Booked at</th>
+
+
+            </tr>
+            <?php foreach ($bookings as $booking): ?>
+            <tr>
+                <td><?= htmlspecialchars($booking['user_name']) ?></td>
+                <td><?= htmlspecialchars($booking['user_phone']) ?></td>
+                
+                <td>
+                <?php if ($booking['status'] == 'Pending'): ?>
+        <a href="approve_booking.php?booking_id=<?= $booking['id'] ?>&action=approve" class="btn btn-success">Approve</a>
+        <a href="approve_booking.php?booking_id=<?= $booking['id'] ?>&action=reject" class="btn btn-danger">Reject</a>
+    <?php elseif ($booking['status'] == 'Approved'): ?>
+        <span class="badge bg-success">Confirmed</span>
+    <?php elseif ($booking['status'] == 'Rejected'): ?>
+        <span class="badge bg-danger">Rejected</span>
+    <?php else: ?>
+        <span class="badge bg-warning">Unknown</span>
+    <?php endif; ?>
+</td>
+
+</td>
+
+                <td><?= htmlspecialchars($booking['created_at']) ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+    <?php else: ?>
+        <p>No bookings for your rentals yet.</p>
+    <?php endif; ?>
+</div>
+
+<!-- Bookings status -->
+<div class="profile_section">
+  <h2>Your <span>Bookings</span></h2>
+  <p>View your rental bookings and their approval status</p>
+  <?php if ($result->num_rows > 0): ?>
+                    <?php while ($row = $result->fetch_assoc()): ?>
+                        <div class="booking_item border p-3 mb-3">
+                            <h4>Rental Type: <?= htmlspecialchars($row['rental_type']) ?></h4>
+                            <p><strong>Location:</strong> <?= htmlspecialchars($row['location']) ?></p>
+                            <p><strong>Floor:</strong> <?= htmlspecialchars($row['floor']) ?></p>
+                            <p><strong>Bedrooms:</strong> <?= htmlspecialchars($row['bedrooms']) ?></p>
+                            <p><strong>Bathrooms:</strong> <?= htmlspecialchars($row['bathrooms']) ?></p>
+                            <p><strong>Gas Type:</strong> <?= htmlspecialchars($row['gas_type']) ?></p>
+                            <p><strong>Rent:</strong> ৳<?= htmlspecialchars($row['monthly_rent']) ?></p>
+                            <p><strong>Booking Date:</strong> <?= htmlspecialchars($row['created_at']) ?></p>
+                            <p><strong>Status:</strong> 
+                                <?php if ($row['status'] == 'Approved'): ?>
+                                    <span class="badge bg-success">Approved</span>
+                                <?php elseif ($row['status'] == 'Pending'): ?>
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                <?php else: ?>
+                                    <span class="badge bg-danger">Rejected</span>
+                                <?php endif; ?>
+                            </p>
+                        </div>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <p class="text-center">No bookings found.</p>
+                <?php endif; ?>
+</div>
+
 
             <!-- Action Buttons -->
             <div class="social_box">

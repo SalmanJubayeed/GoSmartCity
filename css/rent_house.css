@@ -1,0 +1,111 @@
+/* housing section */
+.housing_section {
+    position: relative;
+    background-color: #f8f9fa;
+    padding: 90px 0;
+  }
+  
+  .heading_container {
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  
+  .heading_container h2 {
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  
+  .heading_container h2 span {
+    color: #007bff;
+  }
+  
+  .heading_container p {
+    color: #6c757d;
+  }
+  
+  .housing_box {
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+  }
+  
+  .section_heading {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: #333;
+  }
+  
+  /* Owner Form Section */
+  .owner_box {
+    padding: 30px;
+  }
+  
+  .owner_form .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .owner_form .form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+  }
+  
+  .owner_form .form-select,
+  .owner_form .form-control {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    padding: 10px;
+    width: 100%;
+    font-size: 14px;
+  }
+  
+  .owner_form textarea.form-control {
+    min-height: 100px;
+  }
+  
+  .text-danger {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+  }
+  
+  .list_property_btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .list_property_btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .housing_box {
+      padding: 20px;
+    }
+    
+    .section_heading {
+      font-size: 20px;
+    }
+    
+    .col-md-4 {
+      margin-bottom: 15px;
+    }
+    
+    .list_property_btn {
+      width: 100%;
+    }
+  }

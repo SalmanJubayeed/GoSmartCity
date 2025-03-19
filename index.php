@@ -58,6 +58,14 @@ if(isset($_SESSION["email"])) {
     <link href="css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/info.css">
   </head>
+  <style>
+    body{
+      background-color: #ffffff;
+    }
+    .service_section{
+      background-color: #ffffff;
+    }
+  </style>
 
   <body>
     <div class="hero_area">
@@ -125,7 +133,10 @@ if(isset($_SESSION["email"])) {
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
-                    >User/Admin <span class="sr-only">(current)</span>
+                    ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-square" viewBox="0 0 16 16">
+  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+</svg>  <?=$_SESSION["first_name"]?> <span class="sr-only">(current)</span>
                   </a>
                   <div class="dropdown-menu" aria-labelledby="servicesDropdown">
                     <a class="dropdown-item" href="profile.php">Profile</a>

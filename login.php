@@ -49,7 +49,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if($statement->fetch()) {
           if(password_verify($password, $stored_password)) {
-            session_start();  // Make sure session is started
             $_SESSION["id"] = $id;
             $_SESSION["user_type"] = $user_type;
             $_SESSION["first_name"] = $first_name;

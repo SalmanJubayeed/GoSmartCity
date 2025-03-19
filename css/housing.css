@@ -1,0 +1,185 @@
+/* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  background-color: #f9f9f9;
+}
+
+/* Housing Section */
+.housing_section {
+  position: relative;
+  background-color: #f8f9fa;
+  padding: 90px 0;
+}
+
+.heading_container {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.heading_container h2 {
+  font-weight: 700;
+  margin-bottom: 10px;
+  font-size: 36px;
+}
+
+.heading_container h2 span {
+  color: #007bff;
+}
+
+.heading_container p {
+  color: #6c757d;
+  font-size: 18px;
+}
+
+/* Housing Box Styles */
+.housing_box {
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+}
+
+.section_heading {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+/* Rental Item Styles */
+.rental_item {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.rental_item h4 {
+  font-size: 22px;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 15px;
+}
+
+.rental_item p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.rental_item p strong {
+  color: #333;
+}
+
+/* Form Styles */
+.form-control {
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+  padding: 10px;
+  width: 100%;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Find Your Living Place Section */
+.finder_box {
+  margin-bottom: 30px;
+}
+
+.finder_form .form-group {
+  margin-bottom: 20px;
+}
+
+.finder_form .form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.find_house_btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  font-weight: 600;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.find_house_btn:hover {
+  background-color: #0056b3;
+}
+
+/* Rent Your House Section */
+.owner_box {
+  padding: 30px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 8px;
+}
+
+.owner_box .section_heading {
+  color: #fff;
+}
+
+.owner_content p {
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+.owner_cta {
+  margin-top: 20px;
+}
+
+.list_property_btn {
+  background-color: #fff;
+  color: #007bff;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.list_property_btn:hover {
+  background-color: #f1f1f1;
+  color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .housing_box {
+      padding: 20px;
+  }
+  
+  .section_heading {
+      font-size: 20px;
+  }
+  
+  .col-md-6 {
+      margin-bottom: 15px;
+  }
+}

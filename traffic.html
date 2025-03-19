@@ -15,7 +15,7 @@
     <meta name="author" content="" />
     <link rel="shortcut icon" href="images/GoSmartCitygreen.png" type="" />
 
-    <title>GoSmartCity</title>
+    <title>GoSmartCity - Traffic Updates</title>
 
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
@@ -26,27 +26,106 @@
       rel="stylesheet"
     />
 
-    <!--owl slider stylesheet -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
-    />
-
     <!-- font awesome style -->
     <link href="css/font-awesome.min.css" rel="stylesheet" />
 
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/info.css">
+    <link rel="stylesheet" href="css/traffic.css">
     <!-- responsive style -->
     <link href="css/responsive.css" rel="stylesheet" />
-
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    />
+    
+    <!-- HERE Maps UI CSS -->
+    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
   </head>
+  <style>
+    .traffic_section {
+      background-color: #ffffff;
+      padding-bottom: 50px;
+    }
+    
+    .route_selection_container {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    #mapContainer {
+      height: 500px;
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .traffic_info {
+      margin-top: 30px;
+    }
+    
+    .info_box {
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      height: 100%;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .info_box h5 {
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    
+    .location-options {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    
+    .location-option {
+      background-color: #e9ecef;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .location-option:hover {
+      background-color: #dee2e6;
+    }
+    
+    #findRouteBtn {
+      background-color: #24d278;
+      border: none;
+      padding: 10px 25px;
+      transition: all 0.3s;
+    }
+    
+    #findRouteBtn:hover {
+      background-color: #1aa35e;
+    }
+    
+    .traffic-severity-light {
+      color: green;
+      font-weight: 600;
+    }
+    
+    .traffic-severity-moderate {
+      color: orange;
+      font-weight: 600;
+    }
+    
+    .traffic-severity-heavy {
+      color: red;
+      font-weight: 600;
+    }
+  </style>
 
   <body class="sub_page">
     <div class="hero_area">
@@ -101,9 +180,10 @@
                     >Services <span class="sr-only">(current)</span>
                   </a>
                   <div class="dropdown-menu" aria-labelledby="servicesDropdown">
-                    <a class="dropdown-item" href="housing.html">Housing Search</a>
+                    <a class="dropdown-item" href="housing.php">Housing Search</a>
                     <a class="dropdown-item" href="dining.html">Dining Spots</a>
                     <a class="dropdown-item" href="budget.html">Budget Tracker</a>
+                    <a class="dropdown-item active" href="traffic.html">Traffic Updates</a>
                   </div>
                 </li>
                 <li class="nav-item">
@@ -131,114 +211,62 @@
           </p>
         </div>
 
-        <div class="row traffic_updates">
-          <div class="col-md-4 mb-4">
-            <div class="traffic_box">
-              <div class="status_indicator status_busy"></div>
-              <div class="traffic_detail">
-                <h5>Downtown Main Street</h5>
-                <div class="traffic_info">
-                  <span class="status_text">Heavy Traffic</span>
-                  <span class="update_time">Updated 2 min ago</span>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="route_selection_container">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group mb-3">
+                    <label for="startPoint">Starting Point (in Chattogram)</label>
+                    <input type="text" class="form-control" id="startPoint" placeholder="Enter starting location">
+                    <div class="location-options">
+                      <span class="location-option" data-location="GEC Circle">GEC Circle</span>
+                      <span class="location-option" data-location="Agrabad">Agrabad</span>
+                      <span class="location-option" data-location="Dampara">Dampara</span>
+                      <span class="location-option" data-location="Patenga">Patenga</span>
+                    </div>
+                  </div>
                 </div>
-                <p>
-                  Major construction work causing significant delays. Average
-                  speed 15 km/h.
-                </p>
+                <div class="col-md-6">
+                  <div class="form-group mb-3">
+                    <label for="destPoint">Destination Point (in Chattogram)</label>
+                    <input type="text" class="form-control" id="destPoint" placeholder="Enter destination location">
+                    <div class="location-options">
+                      <span class="location-option" data-location="GEC Circle">GEC Circle</span>
+                      <span class="location-option" data-location="Agrabad">Agrabad</span>
+                      <span class="location-option" data-location="Dampara">Dampara</span>
+                      <span class="location-option" data-location="Patenga">Patenga</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+                <button class="btn btn-primary" id="findRouteBtn">Find Route</button>
               </div>
             </div>
-          </div>
-
-          <div class="col-md-4 mb-4">
-            <div class="traffic_box">
-              <div class="status_indicator status_moderate"></div>
-              <div class="traffic_detail">
-                <h5>West Highway Junction</h5>
-                <div class="traffic_info">
-                  <span class="status_text">Moderate Flow</span>
-                  <span class="update_time">Updated 5 min ago</span>
+    
+            <div id="mapContainer"></div>
+            
+            <div class="traffic_info">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="info_box">
+                    <h5>Distance</h5>
+                    <p id="distanceInfo">-</p>
+                  </div>
                 </div>
-                <p>
-                  Moderate congestion at intersection. Average speed 35 km/h.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4 mb-4">
-            <div class="traffic_box">
-              <div class="status_indicator status_free"></div>
-              <div class="traffic_detail">
-                <h5>East Bridge Route</h5>
-                <div class="traffic_info">
-                  <span class="status_text">Free Flow</span>
-                  <span class="update_time">Updated 1 min ago</span>
+                <div class="col-md-4">
+                  <div class="info_box">
+                    <h5>Estimated Time</h5>
+                    <p id="timeInfo">-</p>
+                  </div>
                 </div>
-                <p>Traffic moving smoothly. Average speed 60 km/h.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4 mb-4">
-            <div class="traffic_box">
-              <div class="status_indicator status_incident"></div>
-              <div class="traffic_detail">
-                <h5>North Avenue</h5>
-                <div class="traffic_info">
-                  <span class="status_text">Accident Alert</span>
-                  <span class="update_time">Updated now</span>
+                <div class="col-md-4">
+                  <div class="info_box">
+                    <h5>Traffic Condition</h5>
+                    <p id="trafficInfo">-</p>
+                  </div>
                 </div>
-                <p>
-                  Minor accident reported. Emergency services on scene. Expect
-                  delays.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="container mt-4 mb-4">
-          <div class="heading_container heading_center">
-            <h2>Traffic <span>Patterns</span></h2>
-            <p>
-              Daily traffic density comparison between main and alternate routes
-            </p>
-          </div>
-          <div class="chart-container">
-            <canvas id="trafficChart"></canvas>
-          </div>
-        </div>
-
-        <div id="trafficMap"></div>
-
-        <div class="route_planner">
-          <h3>Plan Your Route</h3>
-          <div class="route_form">
-            <div class="row">
-              <div class="col-md-5">
-                <div class="form-group">
-                  <label>Starting Point</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter starting location"
-                  />
-                </div>
-              </div>
-              <div class="col-md-5">
-                <div class="form-group">
-                  <label>Destination</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter destination"
-                  />
-                </div>
-              </div>
-              <div class="col-md-2">
-                <button type="submit" class="btn btn-primary find_route_btn">
-                  Find Route
-                </button>
               </div>
             </div>
           </div>
@@ -248,7 +276,6 @@
     <!-- end traffic update section -->
 
     <!-- info section -->
-
     <section class="info_section layout_padding2">
       <div class="container">
         <div class="row">
@@ -300,7 +327,7 @@
             <div class="info_link_box">
               <h4>Links</h4>
               <div class="info_links">
-                <a class="active" href="index.php"> Home </a>
+                <a class="" href="index.php"> Home </a>
                 <a class="" href="about.html"> About </a>
                 <a class="" href="service.html"> Services </a>
                 <a class="" href="why.html"> Why Us </a>
@@ -311,7 +338,6 @@
         </div>
       </div>
     </section>
-
     <!-- end info section -->
 
     <!-- footer section -->
@@ -336,15 +362,245 @@
     <!-- bootstrap js -->
     <script type="text/javascript" src="js/bootstrap.js"></script>
     
-    <!-- Traffic chart -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/traffic-custom.js"></script>
-    <!-- end Traffic chart -->
-    
-    <!-- Traffic Map -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="js/traffic-custom.js"></script>
+    <!-- HERE API scripts -->
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+
     <!-- custom js -->
     <script type="text/javascript" src="js/custom.js"></script>
+    
+    <script>
+      // Initialize the platform object
+      var platform = new H.service.Platform({
+        'apikey': 'LZPAmIOiY-NacYLBAHXUxoUADKmOCDR2TKUHMhnS7iA' // Your HERE API key
+      });
+      
+      // Define coordinates for common locations in Chattogram
+      var commonLocations = {
+        'GEC Circle': { lat: 22.3592, lng: 91.8226 },
+        'Agrabad': { lat: 22.3307, lng: 91.8123 },
+        'Dampara': { lat: 22.3598, lng: 91.8268 },
+        'Patenga': { lat: 22.2345, lng: 91.7852 },
+        'New Market': { lat: 22.3370, lng: 91.8340 },
+        'Kalurghat': { lat: 22.3833, lng: 91.8333 },
+        'Muradpur': { lat: 22.3597, lng: 91.8152 },
+        'Tiger Pass': { lat: 22.3477, lng: 91.8171 }
+      };
+      
+      // Initialize default map view centered on Chattogram
+      var defaultLayers = platform.createDefaultLayers();
+      var map = new H.Map(
+        document.getElementById('mapContainer'),
+        defaultLayers.vector.normal.map,
+        {
+          zoom: 12,
+          center: { lat: 22.3569, lng: 91.7832 } // Chattogram city center
+        }
+      );
+      
+      // Add map interaction and UI controls
+      var mapEvents = new H.mapevents.MapEvents(map);
+      new H.mapevents.Behavior(mapEvents);
+      var ui = H.ui.UI.createDefault(map, defaultLayers);
+      
+      // Create marker and route groups
+      var routeGroup = new H.map.Group();
+      var markerGroup = new H.map.Group();
+      map.addObject(routeGroup);
+      map.addObject(markerGroup);
+      
+      // Make the map responsive
+      window.addEventListener('resize', function() {
+        map.getViewPort().resize();
+      });
+      
+      // Function to add markers
+      function addMarker(position, text, color) {
+        var marker = new H.map.Marker(position);
+        marker.setData(text);
+        markerGroup.addObject(marker);
+      }
+      
+      // Function to calculate route
+      function calculateRoute() {
+        // Clear previous routes and markers
+        routeGroup.removeAll();
+        markerGroup.removeAll();
+        
+        // Get start and destination values
+        var startPoint = document.getElementById('startPoint').value;
+        var destPoint = document.getElementById('destPoint').value;
+        
+        // Check if input is provided
+        if (!startPoint || !destPoint) {
+          alert('Please enter both starting point and destination');
+          return;
+        }
+        
+        // Check if location is in our common locations
+        var startCoords = commonLocations[startPoint] || null;
+        var destCoords = commonLocations[destPoint] || null;
+        
+        if (startCoords && destCoords) {
+          // If both are known locations, calculate route directly
+          routeUsingCoordinates(startCoords, destCoords, startPoint, destPoint);
+        } else {
+          // Use geocoding service to get coordinates
+          geocodeLocations(startPoint, destPoint);
+        }
+      }
+      
+      // Function to geocode locations
+      function geocodeLocations(startPoint, destPoint) {
+        // Get geocoding service
+        var geocoder = platform.getSearchService();
+        
+        // Geocode start point
+        geocoder.geocode({
+          q: startPoint + ', Chattogram, Bangladesh',
+          limit: 1
+        }, function(result) {
+          if (result.items && result.items.length > 0) {
+            var startCoords = result.items[0].position;
+            
+            // Geocode destination point
+            geocoder.geocode({
+              q: destPoint + ', Chattogram, Bangladesh',
+              limit: 1
+            }, function(result) {
+              if (result.items && result.items.length > 0) {
+                var destCoords = result.items[0].position;
+                
+                // Calculate route using coordinates
+                routeUsingCoordinates(startCoords, destCoords, startPoint, destPoint);
+              } else {
+                alert('Could not find destination location. Please try again with a more specific location.');
+              }
+            }, function(error) {
+              alert('Geocoding error: ' + error);
+            });
+          } else {
+            alert('Could not find starting location. Please try again with a more specific location.');
+          }
+        }, function(error) {
+          alert('Geocoding error: ' + error);
+        });
+      }
+      
+      // Function to calculate route using coordinates
+      function routeUsingCoordinates(startCoords, destCoords, startName, destName) {
+        // Add markers for start and destination
+        addMarker(startCoords, 'Start: ' + startName);
+        addMarker(destCoords, 'Destination: ' + destName);
+        
+        // Get routing service
+        var router = platform.getRoutingService(null, 8);
+        
+        // Set up routing parameters
+        var routeParams = {
+          'routingMode': 'fast',
+          'transportMode': 'car',
+          'origin': startCoords.lat + ',' + startCoords.lng,
+          'destination': destCoords.lat + ',' + destCoords.lng,
+          'return': 'polyline,summary,actions,instructions,travelSummary'
+        };
+        
+        // Calculate route
+        router.calculateRoute(routeParams, function(result) {
+          onRouteSuccess(result, startName, destName);
+        }, function(error) {
+          alert('Routing error: ' + error.message);
+        });
+      }
+      
+      // Function to handle successful route calculation
+      function onRouteSuccess(result, startName, destName) {
+        if (result.routes.length) {
+          var route = result.routes[0];
+          var routeLineString = new H.geo.LineString();
+          
+          // Process route sections
+          route.sections.forEach(function(section) {
+            // Create a linestring for the polyline
+            section.polyline.forEach(function(point) {
+              var parts = point.split(',');
+              routeLineString.pushLatLngAlt(parts[0], parts[1]);
+            });
+            
+            // Extract route information
+            var distance = section.travelSummary.length;
+            var duration = section.travelSummary.duration;
+            
+            // Update UI with route information
+            document.getElementById('distanceInfo').innerText = 
+              (distance / 1000).toFixed(2) + ' km';
+            
+            document.getElementById('timeInfo').innerText = 
+              formatTime(duration);
+            
+            // Determine traffic severity
+            var trafficDelayInSeconds = section.travelSummary.trafficDelayInSeconds || 0;
+            var trafficSeverity = section.travelSummary.trafficTime ?
+              (trafficDelayInSeconds / section.travelSummary.baseTime) * 100 : 0;
+            
+            var trafficInfo = document.getElementById('trafficInfo');
+            
+            if (trafficSeverity < 10) {
+              trafficInfo.innerText = 'Light traffic';
+              trafficInfo.className = 'traffic-severity-light';
+            } else if (trafficSeverity < 30) {
+              trafficInfo.innerText = 'Moderate traffic';
+              trafficInfo.className = 'traffic-severity-moderate';
+            } else {
+              trafficInfo.innerText = 'Heavy traffic';
+              trafficInfo.className = 'traffic-severity-heavy';
+            }
+          });
+          
+          // Create a polyline for the route
+          var routeLine = new H.map.Polyline(routeLineString, {
+            style: { strokeColor: '#24d278', lineWidth: 5 }
+          });
+          
+          // Add the route to the map
+          routeGroup.addObject(routeLine);
+          
+          // Set the map view to cover the route
+          map.getViewModel().setLookAtData({
+            bounds: routeLine.getBoundingBox()
+          });
+        }
+      }
+      
+      // Function to format time
+      function formatTime(seconds) {
+        var hours = Math.floor(seconds / 3600);
+        var minutes = Math.floor((seconds % 3600) / 60);
+        
+        if (hours > 0) {
+          return hours + ' hour' + (hours > 1 ? 's' : '') + ' ' + 
+            minutes + ' minute' + (minutes > 1 ? 's' : '');
+        } else {
+          return minutes + ' minute' + (minutes > 1 ? 's' : '');
+        }
+      }
+      
+      // Set up click handlers for location options
+      document.querySelectorAll('.location-option').forEach(function(option) {
+        option.addEventListener('click', function() {
+          var location = this.getAttribute('data-location');
+          var inputField = this.closest('.form-group').querySelector('input');
+          inputField.value = location;
+        });
+      });
+      
+      // Add event listener for find route button
+      document.getElementById('findRouteBtn').addEventListener('click', calculateRoute);
+      
+      // Initialize the current year for copyright
+      document.getElementById('displayYear').textContent = new Date().getFullYear();
+    </script>
   </body>
 </html>

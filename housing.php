@@ -1,3 +1,31 @@
+<?php
+session_start();
+include 'db.php';
+
+$conn = getDatabaseConnection(); 
+
+$query = "SELECT rentals.id, rentals.rental_type, rentals.location, rentals.floor, rentals.bedrooms, rentals.bathrooms, 
+                 rentals.gas_type, rentals.monthly_rent, rentals.features, rentals.user_id as owner_id, 
+                 users.first_name, users.last_name, users.phone
+          FROM rentals
+          JOIN users ON rentals.user_id = users.id";
+$result = $conn->query($query);
+
+$is_logged_in = isset($_SESSION['email']);
+$user_info = [];
+
+if ($is_logged_in) {
+    // Fetch logged-in user details using email
+    $user_email = $_SESSION['email'];
+    $user_query = "SELECT id, first_name, phone, email FROM users WHERE email = ?";
+    $stmt = $conn->prepare($user_query);
+    $stmt->bind_param("s", $user_email);
+    $stmt->execute();
+    $user_result = $stmt->get_result();
+    $user_info = $user_result->fetch_assoc();
+}
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -37,8 +65,9 @@
     <link href="css/font-awesome.min.css" rel="stylesheet" />
 
     <!-- Custom styles for this template -->
-    <link href="css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/info.css">
+    <link rel="stylesheet" href="css/housing.css">
     <!-- responsive style -->
     <link href="css/responsive.css" rel="stylesheet" />
   </head>
@@ -97,7 +126,7 @@
                   </a>
                   <div class="dropdown-menu" aria-labelledby="servicesDropdown">
                     <a class="dropdown-item" href="traffic.html">Traffic Updates</a>
-                    <a class="dropdown-item" href="housing.php">Hosing Search</a>
+                    <a class="dropdown-item" href="dining.html">Dining Spots</a>
                     <a class="dropdown-item" href="budget.html">Budget Tracker</a>
                   </div>
                 </li>
@@ -115,188 +144,65 @@
       <!-- end header section -->
     </div>
 
-    <!-- dining spots section -->
-    <section class="dining_section layout_padding">
-      <div class="container">
-        <div class="heading_container heading_center">
-          <h2>Dining <span>Spots</span></h2>
-          <p>
-            Discover the best restaurants and culinary experiences in your city
-          </p>
+
+<!-- Housing Section -->
+<section class="housing_section layout_padding">
+  <div class="container">
+    <div class="heading_container heading_center">
+      <h2>Housing <span>Options</span></h2>
+      <p>Find your perfect home or list your property with our platform.</p>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <!-- Available Rentals Section -->
+        <div class="housing_box">
+          <h3 class="section_heading text-center">Available Houses</h3>
+          <?php while ($row = $result->fetch_assoc()): ?>
+            <div class="rental_item border p-3 mb-3">
+              <h4>Rental Type: <?= htmlspecialchars($row['rental_type']) ?></h4>
+              <p><strong>Location:</strong> <?= htmlspecialchars($row['location']) ?></p>
+              <p><strong>Floor:</strong> <?= htmlspecialchars($row['floor']) ?></p>
+              <p><strong>Bedrooms:</strong> <?= htmlspecialchars($row['bedrooms']) ?></p>
+              <p><strong>Bathrooms:</strong> <?= htmlspecialchars($row['bathrooms']) ?></p>
+              <p><strong>Gas Type:</strong> <?= htmlspecialchars($row['gas_type']) ?></p>
+              <p><strong>Rent:</strong> ৳<?= htmlspecialchars($row['monthly_rent']) ?></p>
+              <p><strong>Owner:</strong> <?= htmlspecialchars($row['first_name'] . " " . $row['last_name']) ?></p>
+              <p><strong>Contact:</strong> <?= htmlspecialchars($row['phone']) ?></p>
+              
+              <?php if ($is_logged_in && !empty($user_info)): ?>
+                <form action="book_house.php" method="post">
+                  <input type="hidden" name="rental_id" value="<?= htmlspecialchars($row['id']) ?>">
+                  <input type="hidden" name="owner_id" value="<?= htmlspecialchars($row['owner_id']) ?>">
+                  <input type="hidden" name="user_name" value="<?= htmlspecialchars($user_info['first_name']) ?>">
+                  <input type="hidden" name="user_phone" value="<?= htmlspecialchars($user_info['phone']) ?>">
+                  <input type="hidden" name="user_email" value="<?= htmlspecialchars($user_info['email']) ?>">
+                  <button type="submit" class="btn btn-primary w-100">Book House</button>
+                </form>
+              <?php else: ?>
+                <p class="text-danger text-center">You need to <a href="login.php">log in</a> to book a house.</p>
+              <?php endif; ?>
+              
+            </div>
+          <?php endwhile; ?>
         </div>
 
-        <div class="row dining_updates">
-          <div class="col-md-4 mb-4">
-            <div class="dining_box">
-              <div class="restaurant_img">
-                <img src="images/mejjan.png" alt="Mezzan Haile Ayun" />
-              </div>
-              <div class="dining_detail">
-                <div class="rating_badge">4.8 ★</div>
-                <h5>Mezzan Haile Ayun</h5>
-                <div class="cuisine_info">
-                  <span class="cuisine_type">Bangladeshi</span>
-                  <span class="price_range">$$$</span>
-                </div>
-                <p class="famous_dishes">
-                  Famous for: Traditional Mezban Beef | Rich, Spicy Beef Curry |
-                  Chittagonian Hospitality
-                </p>
-                <div class="timing_info">
-                  <i class="fa fa-clock-o"></i>
-                  <span>Open: 11:00 AM - 10:00 PM</span>
-                </div>
-              </div>
+        <!-- House Owner Section -->
+        <div class="housing_box owner_box mt-5">
+          <h3 class="section_heading text-center">Rent Your House or Apartment</h3>
+          <div class="owner_content">
+            <p class="text-center">List your property with us and reach thousands of potential tenants.</p>
+            <div class="owner_cta text-center">
+              <a href="rent_house.php" class="btn btn-primary list_property_btn">List Your Property</a>
             </div>
           </div>
-
-          <div class="col-md-4 mb-4">
-            <div class="dining_box">
-              <div class="restaurant_img">
-                <img src="images/bir_chattala.png" alt="BIR Chattala" />
-              </div>
-              <div class="dining_detail">
-                <div class="rating_badge">4.6 ★</div>
-                <h5>BIR Chattala</h5>
-                <div class="cuisine_info">
-                  <span class="cuisine_type">Bangladeshi</span>
-                  <span class="price_range">$$</span>
-                </div>
-                <p class="famous_dishes">
-                  Famous for: Authentic Bangladeshi Cuisine | Traditional
-                  Wedding Dishes | Popular Among Locals & Visitors
-                </p>
-                <div class="timing_info">
-                  <i class="fa fa-clock-o"></i>
-                  <span>Open: 12:00 PM - 11:00 PM</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4 mb-4">
-            <div class="dining_box">
-              <div class="restaurant_img">
-                <img src="images/secret_recipe.png" alt="Secret Recipe" />
-              </div>
-              <div class="dining_detail">
-                <div class="rating_badge">4.9 ★</div>
-                <h5>Secret Recipe</h5>
-                <div class="cuisine_info">
-                  <span class="cuisine_type">Asian</span>
-                  <span class="price_range">$$$$</span>
-                </div>
-                <p class="famous_dishes">
-                  Famous for: World’s Best Cakes | Delicious Food & Beverages |
-                  Welcoming Ambiance
-                </p>
-                <div class="timing_info">
-                  <i class="fa fa-clock-o"></i>
-                  <span>Open: 5:00 PM - 10:30 PM</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="restaurant_filter">
-          <h3>Find Your Perfect Restaurant</h3>
-          <div class="filter_form">
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label>Cuisine Type</label>
-                  <select class="form-control">
-                    <option>All Cuisines</option>
-                    <option>Italian</option>
-                    <option>Indian</option>
-                    <option>Japanese</option>
-                    <option>Chinese</option>
-                    <option>American</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label>Budget Range</label>
-                  <select class="form-control">
-                    <option>All Prices</option>
-                    <option>$ (Under $15)</option>
-                    <option>$$ ($15-$30)</option>
-                    <option>$$$ ($31-$60)</option>
-                    <option>$$$$ (Above $60)</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label>Rating</label>
-                  <select class="form-control">
-                    <option>All Ratings</option>
-                    <option>4.5 & above</option>
-                    <option>4.0 & above</option>
-                    <option>3.5 & above</option>
-                    <option>3.0 & above</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <button
-                  type="submit"
-                  class="btn btn-primary find_restaurant_btn"
-                >
-                  Find Restaurants
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="suggest_restaurant">
-          <h3>Suggest a Restaurant</h3>
-          <form class="suggestion_form">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Restaurant Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter restaurant name"
-                  />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Cuisine Type</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter cuisine type"
-                  />
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label>Why do you recommend this place?</label>
-                  <textarea
-                    class="form-control"
-                    rows="3"
-                    placeholder="Tell us what you love about this restaurant"
-                  ></textarea>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <button type="submit" class="btn btn-primary suggest_btn">
-                  Submit Suggestion
-                </button>
-              </div>
-            </div>
-          </form>
         </div>
       </div>
-    </section>
-    <!-- end dining spots section -->
+    </div>
+  </div>
+</section>
+<!-- End Housing Section -->
+
 
     <!-- info section -->
 
