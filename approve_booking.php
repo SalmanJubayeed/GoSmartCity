@@ -23,7 +23,7 @@ if (isset($_GET['booking_id']) && isset($_GET['action'])) {
     $stmt->bind_param("si", $new_status, $booking_id);
     
     if ($stmt->execute()) {
-        header("Location: owner_dashboard.php?message=Booking updated successfully");
+        header("Location: profile.php?message=Booking updated successfully");
         exit();
     } else {
         echo "Error updating booking: " . $conn->error;

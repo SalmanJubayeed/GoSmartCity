@@ -311,6 +311,7 @@ p {
         <h3>Your Rentals</h3>
         <table>
             <tr>
+                <th>Rental ID</th>
                 <th>Location</th>
                 <th>Rental Type</th>
                 <th>Monthly Rent</th>
@@ -321,6 +322,7 @@ p {
             </tr>
             <?php foreach ($rentals as $rental): ?>
             <tr>
+                <td><?= htmlspecialchars($rental['id']) ?></td>
                 <td><?= htmlspecialchars($rental['location']) ?></td>
                 <td><?= htmlspecialchars($rental['rental_type']) ?></td>
                 <td><?= htmlspecialchars($rental['monthly_rent']) ?></td>
@@ -342,6 +344,7 @@ p {
         <h3>Bookings for Your Rentals</h3>
         <table>
             <tr>
+                <th>Rental ID</th>
                 <th>Booker Name</th>
                 <th>Phone</th>
                 <th>Status</th>
@@ -351,6 +354,7 @@ p {
             </tr>
             <?php foreach ($bookings as $booking): ?>
             <tr>
+                <td><?= htmlspecialchars($booking['rental_id']) ?></td>
                 <td><?= htmlspecialchars($booking['user_name']) ?></td>
                 <td><?= htmlspecialchars($booking['user_phone']) ?></td>
                 
@@ -378,36 +382,49 @@ p {
     <?php endif; ?>
 </div>
 
-<!-- Bookings status -->
-<div class="profile_section">
-  <h2>Your <span>Bookings</span></h2>
-  <p>View your rental bookings and their approval status</p>
-  <?php if ($result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
-                        <div class="booking_item border p-3 mb-3">
-                            <h4>Rental Type: <?= htmlspecialchars($row['rental_type']) ?></h4>
-                            <p><strong>Location:</strong> <?= htmlspecialchars($row['location']) ?></p>
-                            <p><strong>Floor:</strong> <?= htmlspecialchars($row['floor']) ?></p>
-                            <p><strong>Bedrooms:</strong> <?= htmlspecialchars($row['bedrooms']) ?></p>
-                            <p><strong>Bathrooms:</strong> <?= htmlspecialchars($row['bathrooms']) ?></p>
-                            <p><strong>Gas Type:</strong> <?= htmlspecialchars($row['gas_type']) ?></p>
-                            <p><strong>Rent:</strong> ৳<?= htmlspecialchars($row['monthly_rent']) ?></p>
-                            <p><strong>Booking Date:</strong> <?= htmlspecialchars($row['created_at']) ?></p>
-                            <p><strong>Status:</strong> 
-                                <?php if ($row['status'] == 'Approved'): ?>
-                                    <span class="badge bg-success">Approved</span>
-                                <?php elseif ($row['status'] == 'Pending'): ?>
-                                    <span class="badge bg-warning text-dark">Pending</span>
-                                <?php else: ?>
-                                    <span class="badge bg-danger">Rejected</span>
-                                <?php endif; ?>
-                            </p>
-                        </div>
-                    <?php endwhile; ?>
-                <?php else: ?>
-                    <p class="text-center">No bookings found.</p>
-                <?php endif; ?>
+<!-- Bookings Status -->
+<div class="profile-section">
+    <?php if ($result->num_rows > 0): ?>
+        <h3>Your Bookings</h3>
+        <table>
+            <tr>
+                <th>Rental Type</th>
+                <th>Location</th>
+                <th>Floor</th>
+                <th>Bedrooms</th>
+                <th>Bathrooms</th>
+                <th>Gas Type</th>
+                <th>Monthly Rent</th>
+                <th>Booking Date</th>
+                <th>Status</th>
+            </tr>
+            <?php while ($row = $result->fetch_assoc()): ?>
+            <tr>
+                <td><?= htmlspecialchars($row['rental_type']) ?></td>
+                <td><?= htmlspecialchars($row['location']) ?></td>
+                <td><?= htmlspecialchars($row['floor']) ?></td>
+                <td><?= htmlspecialchars($row['bedrooms']) ?></td>
+                <td><?= htmlspecialchars($row['bathrooms']) ?></td>
+                <td><?= htmlspecialchars($row['gas_type']) ?></td>
+                <td>৳<?= htmlspecialchars($row['monthly_rent']) ?></td>
+                <td><?= htmlspecialchars($row['created_at']) ?></td>
+                <td>
+                    <?php if ($row['status'] == 'Approved'): ?>
+                        <span class="badge bg-success">Approved</span>
+                    <?php elseif ($row['status'] == 'Pending'): ?>
+                        <span class="badge bg-warning text-dark">Pending</span>
+                    <?php else: ?>
+                        <span class="badge bg-danger">Rejected</span>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <?php endwhile; ?>
+        </table>
+    <?php else: ?>
+        <p class="text-center">No bookings found.</p>
+    <?php endif; ?>
 </div>
+
 
 
             <!-- Action Buttons -->

@@ -8,7 +8,9 @@ $query = "SELECT rentals.id, rentals.rental_type, rentals.location, rentals.floo
                  rentals.gas_type, rentals.monthly_rent, rentals.features, rentals.user_id as owner_id, 
                  users.first_name, users.last_name, users.phone
           FROM rentals
-          JOIN users ON rentals.user_id = users.id";
+          JOIN users ON rentals.user_id = users.id
+          WHERE rentals.id NOT IN (
+              SELECT DISTINCT rental_id FROM bookings WHERE status = 'approved')";
 $result = $conn->query($query);
 
 $is_logged_in = isset($_SESSION['email']);
