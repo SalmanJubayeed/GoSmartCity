@@ -125,6 +125,111 @@
       color: red;
       font-weight: 600;
     }
+
+    /* Add these styles to your CSS file */
+.update-status {
+  text-align: center;
+  margin-top: 15px;
+  color: #24d278;
+  font-weight: bold;
+}
+
+.pulse-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #24d278;
+  margin-left: 5px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+}
+
+.last-updated {
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+}
+
+.traffic-severity-light {
+  color: #24d278;
+}
+
+.traffic-severity-moderate {
+  color: #ffa500;
+}
+
+.traffic-severity-heavy {
+  color: #ff0000;
+}
+
+/* Add these styles to your CSS file */
+.update-status {
+  text-align: center;
+  margin-top: 15px;
+  color: #24d278;
+  font-weight: bold;
+}
+
+.pulse-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #24d278;
+  margin-left: 5px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+}
+
+.last-updated {
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+}
+
+.traffic-severity-light {
+  color: #24d278;
+}
+
+.traffic-severity-moderate {
+  color: #ffa500;
+}
+
+.traffic-severity-heavy {
+  color: #ff0000;
+}
+
   </style>
 
   <body class="sub_page">
@@ -491,88 +596,190 @@
       
       // Function to calculate route using coordinates
       function routeUsingCoordinates(startCoords, destCoords, startName, destName) {
-        // Add markers for start and destination
-        addMarker(startCoords, 'Start: ' + startName);
-        addMarker(destCoords, 'Destination: ' + destName);
+  // Clear previous routes and markers
+  routeGroup.removeAll();
+  markerGroup.removeAll();
+  
+  // Clear any existing update interval
+  if (window.routeUpdateInterval) {
+    clearInterval(window.routeUpdateInterval);
+  }
+  
+  // Remove previous update status elements if they exist
+  var updateStatus = document.getElementById('updateStatus');
+  if (updateStatus) {
+    updateStatus.remove();
+  }
+  
+  var lastUpdated = document.getElementById('lastUpdated');
+  if (lastUpdated) {
+    lastUpdated.remove();
+  }
+  
+  // Add markers for start and destination
+  addMarker(startCoords, 'Start: ' + startName);
+  addMarker(destCoords, 'Destination: ' + destName);
+  
+  // Get routing service - make sure we're using v8
+  var router = platform.getRoutingService(null, 8);
+  
+  // Set up routing parameters
+  var routeParams = {
+    'routingMode': 'fast',
+    'transportMode': 'car',
+    'origin': startCoords.lat + ',' + startCoords.lng,
+    'destination': destCoords.lat + ',' + destCoords.lng,
+    'return': 'polyline,summary,actions,instructions,travelSummary'
+  };
+  
+  // Calculate route
+  router.calculateRoute(routeParams, function(result) {
+    onRouteSuccess(result, startName, destName);
+  }, function(error) {
+    alert('Routing error: ' + error.message);
+  });
+}
+
+// Function to set up real-time updates
+function setupRealTimeUpdates(startCoords, destCoords, startName, destName) {
+  // Clear any existing update interval
+  if (window.routeUpdateInterval) {
+    clearInterval(window.routeUpdateInterval);
+  }
+  
+  // Add visual indicator for real-time updates
+  var statusElement = document.getElementById('updateStatus');
+  if (!statusElement) {
+    statusElement = document.createElement('div');
+    statusElement.id = 'updateStatus';
+    statusElement.className = 'update-status';
+    document.querySelector('.traffic_info').appendChild(statusElement);
+  }
+  statusElement.innerHTML = 'Live updates active <span class="pulse-dot"></span>';
+  
+  // Add timestamp element
+  var timestampElement = document.getElementById('lastUpdated');
+  if (!timestampElement) {
+    timestampElement = document.createElement('p');
+    timestampElement.id = 'lastUpdated';
+    timestampElement.className = 'last-updated';
+    document.querySelector('.traffic_info').appendChild(timestampElement);
+  }
+  
+  // Update timestamp
+  var now = new Date();
+  timestampElement.innerText = 'Last updated: ' + now.toLocaleTimeString();
+  
+  // Set up interval for real-time updates (every 60 seconds)
+  window.routeUpdateInterval = setInterval(function() {
+    // Re-calculate the route to get fresh traffic data
+    var router = platform.getRoutingService(null, 8);
+    
+    var routeParams = {
+      'routingMode': 'fast',
+      'transportMode': 'car',
+      'origin': startCoords.lat + ',' + startCoords.lng,
+      'destination': destCoords.lat + ',' + destCoords.lng,
+      'return': 'polyline,summary,actions,instructions,travelSummary'
+    };
+    
+    // Update the timestamp
+    var updateTime = new Date();
+    document.getElementById('lastUpdated').innerText = 
+      'Last updated: ' + updateTime.toLocaleTimeString();
+    
+    // Calculate route with updated traffic information
+    router.calculateRoute(routeParams, function(result) {
+      if (result.routes && result.routes.length) {
+        var route = result.routes[0];
         
-        // Get routing service
-        var router = platform.getRoutingService(null, 8);
-        
-        // Set up routing parameters
-        var routeParams = {
-          'routingMode': 'fast',
-          'transportMode': 'car',
-          'origin': startCoords.lat + ',' + startCoords.lng,
-          'destination': destCoords.lat + ',' + destCoords.lng,
-          'return': 'polyline,summary,actions,instructions,travelSummary'
-        };
-        
-        // Calculate route
-        router.calculateRoute(routeParams, function(result) {
-          onRouteSuccess(result, startName, destName);
-        }, function(error) {
-          alert('Routing error: ' + error.message);
+        // Process route sections
+        route.sections.forEach(function(section) {
+          // Extract route information
+          var distance = section.travelSummary.length;
+          var duration = section.travelSummary.duration;
+          
+          // Update UI with route information
+          document.getElementById('distanceInfo').innerText = 
+            (distance / 1000).toFixed(2) + ' km';
+          
+          document.getElementById('timeInfo').innerText = 
+            formatTime(duration);
+          
+          // Determine traffic severity
+          var trafficDelayInSeconds = section.travelSummary.trafficDelayInSeconds || 0;
+          var trafficSeverity = trafficDelayInSeconds > 0 ? 
+            (trafficDelayInSeconds / section.travelSummary.baseTime) * 100 : 0;
+          
+          var trafficInfo = document.getElementById('trafficInfo');
+          
+          if (trafficSeverity < 10) {
+            trafficInfo.innerText = 'Light traffic';
+            trafficInfo.className = 'traffic-severity-light';
+          } else if (trafficSeverity < 30) {
+            trafficInfo.innerText = 'Moderate traffic';
+            trafficInfo.className = 'traffic-severity-moderate';
+          } else {
+            trafficInfo.innerText = 'Heavy traffic';
+            trafficInfo.className = 'traffic-severity-heavy';
+          }
         });
       }
+    }, function(error) {
+      console.error('Real-time update error: ' + error.message);
+    });
+  }, 60000); // Update every 60 seconds
+}
+
+// Function to update just the traffic information
+function updateTrafficInfo(result) {
+  if (result.routes.length) {
+    var route = result.routes[0];
+    
+    // Process route sections
+    route.sections.forEach(function(section) {
+      // Extract route information
+      var distance = section.travelSummary.length;
+      var duration = section.travelSummary.duration;
       
-      // Function to handle successful route calculation
-      function onRouteSuccess(result, startName, destName) {
-        if (result.routes.length) {
-          var route = result.routes[0];
-          var routeLineString = new H.geo.LineString();
-          
-          // Process route sections
-          route.sections.forEach(function(section) {
-            // Create a linestring for the polyline
-            section.polyline.forEach(function(point) {
-              var parts = point.split(',');
-              routeLineString.pushLatLngAlt(parts[0], parts[1]);
-            });
-            
-            // Extract route information
-            var distance = section.travelSummary.length;
-            var duration = section.travelSummary.duration;
-            
-            // Update UI with route information
-            document.getElementById('distanceInfo').innerText = 
-              (distance / 1000).toFixed(2) + ' km';
-            
-            document.getElementById('timeInfo').innerText = 
-              formatTime(duration);
-            
-            // Determine traffic severity
-            var trafficDelayInSeconds = section.travelSummary.trafficDelayInSeconds || 0;
-            var trafficSeverity = section.travelSummary.trafficTime ?
-              (trafficDelayInSeconds / section.travelSummary.baseTime) * 100 : 0;
-            
-            var trafficInfo = document.getElementById('trafficInfo');
-            
-            if (trafficSeverity < 10) {
-              trafficInfo.innerText = 'Light traffic';
-              trafficInfo.className = 'traffic-severity-light';
-            } else if (trafficSeverity < 30) {
-              trafficInfo.innerText = 'Moderate traffic';
-              trafficInfo.className = 'traffic-severity-moderate';
-            } else {
-              trafficInfo.innerText = 'Heavy traffic';
-              trafficInfo.className = 'traffic-severity-heavy';
-            }
-          });
-          
-          // Create a polyline for the route
-          var routeLine = new H.map.Polyline(routeLineString, {
-            style: { strokeColor: '#24d278', lineWidth: 5 }
-          });
-          
-          // Add the route to the map
-          routeGroup.addObject(routeLine);
-          
-          // Set the map view to cover the route
-          map.getViewModel().setLookAtData({
-            bounds: routeLine.getBoundingBox()
-          });
-        }
+      // Update UI with route information
+      document.getElementById('distanceInfo').innerText = 
+        (distance / 1000).toFixed(2) + ' km';
+      
+      document.getElementById('timeInfo').innerText = 
+        formatTime(duration);
+      
+      // Determine traffic severity
+      var trafficDelayInSeconds = section.travelSummary.trafficDelayInSeconds || 0;
+      var trafficSeverity = section.travelSummary.trafficTime ?
+        (trafficDelayInSeconds / section.travelSummary.baseTime) * 100 : 0;
+      
+      var trafficInfo = document.getElementById('trafficInfo');
+      
+      if (trafficSeverity < 10) {
+        trafficInfo.innerText = 'Light traffic';
+        trafficInfo.className = 'traffic-severity-light';
+      } else if (trafficSeverity < 30) {
+        trafficInfo.innerText = 'Moderate traffic';
+        trafficInfo.className = 'traffic-severity-moderate';
+      } else {
+        trafficInfo.innerText = 'Heavy traffic';
+        trafficInfo.className = 'traffic-severity-heavy';
       }
+      
+      // Add last updated timestamp
+      var lastUpdated = document.getElementById('lastUpdated');
+      if (!lastUpdated) {
+        lastUpdated = document.createElement('p');
+        lastUpdated.id = 'lastUpdated';
+        lastUpdated.className = 'last-updated';
+        document.querySelector('.traffic_info').appendChild(lastUpdated);
+      }
+      var now = new Date();
+      lastUpdated.innerText = 'Last updated: ' + now.toLocaleTimeString();
+    });
+  }
+}
       
       // Function to format time
       function formatTime(seconds) {
