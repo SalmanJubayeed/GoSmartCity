@@ -69,15 +69,15 @@ sql/ – Database setup files
 📸 Screenshots
 
 Landing page showcasing the main interface.
-![Landing Page](images/GSCscreenshots/landing_page.png)
+![Landing Page](images/GSCScreenshots/landing_page.png)
 
 Housing search and booking functionality.
-![Housing Search](images/GSCscreenshots/housing_search1.png)
+![Housing Search](images/GSCSreenshots/housing_search1.png)
 
-![Profile](images/GSCscreenshots/profile.png)
+![Profile](images/GSCScreenshots/profile.png)
 
 Budget tracker page.
-![Budget Tracker](images/GSCscreenshots/budget_tracker.png)
+![Budget Tracker](images/GSCScreenshots/budget_tracker.png)
 
 
 🙌 Acknowledgments
