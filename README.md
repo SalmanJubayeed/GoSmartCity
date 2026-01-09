@@ -6,7 +6,7 @@ GoSmartCity is a web application designed to help people moving to a new city ea
 
 Check out the live version of GoSmartCity: GoSmartCity Live
 
-(Replace YOUR_LIVE_DEMO_LINK_HERE with your actual InfinityFree URL.)
+(gosmartcity.42web.io)
 
 🚀 Features
 
