@@ -67,11 +67,8 @@ sql/ – Database setup files
 
 📸 Screenshots
 
-(Optional but recommended for visual reference)
-
-
 Landing page showcasing the main interface.
-
+(images/GSCscreenshots/landing_page.png)
 
 Housing search and booking functionality.
 
@@ -89,11 +86,11 @@ Course project guidance by Internet Programming instructors
 
 👥 Team
 
-Salman Jubayeed – Frontend & Backend
+Salman Jubayeed
 
-Faraz Fardin – Backend & Database
+Faraz Fardin
 
-Tanbirur Rahman Rocky – UI/UX & Templates
+Tanbirur Rahman Rocky
 
 ⚡ Project Status
 
