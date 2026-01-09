@@ -65,17 +65,20 @@ css/ – Finexo template & custom styles
 
 sql/ – Database setup files
 
+
 📸 Screenshots
 
 Landing page showcasing the main interface.
-(images/GSCscreenshots/landing_page.png)
+![Landing Page](images/GSCscreenshots/landing_page.png)
 
 Housing search and booking functionality.
+![Housing Search](images/GSCscreenshots/housing_search1.png)
 
+![Profile](images/GSCscreenshots/profile.png)
 
 Budget tracker page.
+![Budget Tracker](images/GSCscreenshots/budget_tracker.png)
 
-(Replace link_to_screenshotX.png with actual screenshot paths in your repo.)
 
 🙌 Acknowledgments
 
