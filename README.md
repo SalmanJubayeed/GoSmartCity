@@ -72,7 +72,7 @@ Landing page showcasing the main interface.
 ![Landing Page](images/GSCScreenshots/landing_page.png)
 
 Housing search and booking functionality.
-![Housing Search](images/GSCSreenshots/housing_search1.png)
+![Housing Search](images/GSCScreenshots/housing_search1.png)
 
 ![Profile](images/GSCScreenshots/profile.png)
 
