@@ -82,7 +82,8 @@ Budget tracker page.
 
 🙌 Acknowledgments
 
-Website design inspired by Finexo Free CSS Templates
+Website design inspired by [Finexo Free CSS Templates](https://html.design/download/finexo-crypto-currency-website-template/)
+
 
 Course project guidance by Internet Programming instructors
 
