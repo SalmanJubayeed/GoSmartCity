@@ -2,6 +2,12 @@ GoSmartCity
 
 GoSmartCity is a web application designed to help people moving to a new city easily find housing, navigate traffic, discover dining spots, and manage their budgets.
 
+🌐 Live Demo
+
+Check out the live version of GoSmartCity: GoSmartCity Live
+
+(Replace YOUR_LIVE_DEMO_LINK_HERE with your actual InfinityFree URL.)
+
 🚀 Features
 
 User registration and login system
@@ -35,9 +41,9 @@ git clone https://github.com/SalmanJubayeed/GoSmartCity.git
 
 Start XAMPP (Apache & MySQL).
 
-Import the SQL file in sql/ folder into phpMyAdmin.
+Import the SQL file in the sql/ folder into phpMyAdmin.
 
-Place the project in htdocs folder.
+Place the project folder in htdocs.
 
 Open in browser: http://localhost/GoSmartCity.
 
@@ -61,6 +67,8 @@ sql/ – Database setup files
 
 📸 Screenshots
 
+(Optional but recommended for visual reference)
+
 
 Landing page showcasing the main interface.
 
@@ -74,17 +82,17 @@ Budget tracker page.
 
 🙌 Acknowledgments
 
-Website design inspired by [Finexo Free CSS Templates](https://html.design/download/finexo-crypto-currency-website-template/)
+Website design inspired by Finexo Free CSS Templates
 
 Course project guidance by Internet Programming instructors
 
 👥 Team
 
-Salman Jubayeed
+Salman Jubayeed – Frontend & Backend
 
-Faraz Fardin
+Faraz Fardin – Backend & Database
 
-Tanbirur Rahman Rocky
+Tanbirur Rahman Rocky – UI/UX & Templates
 
 ⚡ Project Status
 
